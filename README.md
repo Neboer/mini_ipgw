@@ -1,16 +1,16 @@
 # NEU ipgw manager
 help you manage your ipgw network connection.
 
-The neu-ipgw-manager is a compressed programme to help you connect/disconnect the ipgw network in NEU.
+The neu-ipgw-manager is a compressed programme which can help you connect to / disconnect from the ipgw network in NEU.
 It can check your network status and save your time on ipgw login/logout.
 
-By the way, the program is developed based on ipgw.neu.edu.cn.If you want to do other things with this program,
-you can sure change the target website and post data content.
+By the way, the program is developed based on ipgw.neu.edu.cn. If you want to do other things with this program,
+you can surely change the target website and the post data.
 
-Welcome to help me with the software developing!The software is designed by NEU students and will help more NEU
+**Welcome to join me to develop this software!** The software is designed and developed by NEU students and will help more NEU
 students.
 ## usage
-Ipgw managener can be used in many different ways, it can help you a lot.
+Ipgw managener can be used in many different ways. However, it is quite easy to use and configure.
 ### basic usage
 ```
 ipgw

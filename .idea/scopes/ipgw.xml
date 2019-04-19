@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ipgw" pattern="file[ipgw-linux-c]:*" />
+</component>
