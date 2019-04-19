@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.13)
+project(ipgw_linux_c)
+set(CURL_LIBRARY "-lcurl")
+find_package(CURL REQUIRED)
+add_executable(ipgw_linux_c main.cpp)
+INCLUDE_DIRECTORIES(${CURL_INCLUDE_DIR})
+TARGET_LINK_LIBRARIES(ipgw_linux_c ${CURL_LIBRARIES})
+set(CMAKE_CXX_STANDARD 14)
