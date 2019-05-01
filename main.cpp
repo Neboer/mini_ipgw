@@ -1,24 +1,71 @@
+// main function, aimed at receive & pass flags
+#include <unistd.h>
+#include <fstream>
+#include <sstream>
 #include <iostream>
-#include <curl/curl.h>
+
+extern "C" {
+#include "module/settings.h"
+#include "module/getinmemory.h"
+}
 
 using namespace std;
 
 int main(int argc, char *argv[]) {// programme entrance
-    CURL *curl;             //定义CURL类型的指针
-    CURLcode res;           //定义CURLcode类型的变量，保存返回状态码
-    if (argc != 2) {
-        printf("Usage : file <url>;\n");
-        exit(1);
-    }
+    char option;// getopt() currently handle option
+    const char help_file_location[] = "/home/neboer/documents/ipgw-linux-c/module/helpfile.txt";
+    string username = string(), password;
+    bool username_is_set = false, password_is_set = false;
 
-    curl = curl_easy_init();        //初始化一个CURL类型的指针
-    if (curl != nullptr) {
-        //设置curl选项. 其中CURLOPT_URL是让用户指 定url. argv[1]中存放的命令行传进来的网址
-        curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-        //调用curl_easy_perform 执行我们的设置.并进行相关的操作. 在这里只在屏幕上显示出来.
-        res = curl_easy_perform(curl);
-        //清除curl操作.
-        curl_easy_cleanup(curl);
+    while ((option = getopt(argc, argv, "hu:p:")) != -1) {
+        switch (option) {
+            case 'h':// show help page
+            {
+                ifstream help_file(help_file_location);
+                ostringstream help;
+                if (!help_file.is_open()) {
+                    cout << "help file error.";
+                    return -1;
+                }
+                help << help_file.rdbuf();
+                cout << help.str();
+                help_file.close();
+                return 0;
+            }
+            case 'u':// set username
+            {
+                username = string(optarg);
+                if (username.empty()) {
+                    cerr << "username cannot be empty";
+                    return -1;
+                } else {
+                    username_is_set = true;
+                }
+                break;
+            }
+            case 'p': {
+                password = string(optarg);
+                if (password.empty()) {
+                    cerr << "password cannot be empty, please check.";
+                    return -1;
+                } else {
+                    password_is_set = true;
+                }
+                break;
+            }
+            default: {
+                cerr << "error input.";
+            }
+        }
     }
-    return 0;
+    if (!username_is_set) {
+        cerr << "must input username";
+        return -1;
+    }
+    if (!password_is_set) {
+        cerr << "must input password";
+        return -1;
+    }
+    printf("%s", get_data("default"));
+    cout << string(Post("www.baidu.com", ""));
 }

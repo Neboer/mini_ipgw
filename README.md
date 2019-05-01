@@ -9,6 +9,15 @@ you can surely change the target website and the post data.
 
 **Welcome to join me to develop this software!** The software is designed and developed by NEU students and will help more NEU
 students.
+## build
+You can download the binary programme directly.
+The programme need libcurl library to work properly.The programme have a complete-compiled version
+, when you use it, you don't have to install other library.
+You can also use cmake to build the programme from source code. The programme contains a makefile and you can build it
+by these commands:
+```
+cmake
+```
 ## usage
 Ipgw managener can be used in many different ways. However, it is quite easy to use and configure.
 ### basic usage
@@ -46,7 +55,7 @@ offline yourself from ipgw.
 
 ### easy configure
 ```
-ipgw -c|--configure
+ipgw -c|--configure <configure-option>(optional)
 ```
 show the configuration of the programme.
 
@@ -67,9 +76,10 @@ Don't forget to run the following command to let it work.
 ipgw --save-configure
 ```
 ### configuration file
-You can set the default username(student number) and your password.
+by default, the configuration file is ~/ipgw/settings.json
+You can set the default username(student number) and your password in it.
 
-You can also set the default account of the NEU network center website [http://ipgw.neu.edu.cn:8800/].
+You can also set the default account of the NEU network center website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
  
  and so on ...
   

@@ -1,0 +1,14 @@
+{
+  "postdata": {
+    "action": "${action}",
+    "ac_id": "1",
+    "user_ip": "",
+    "nas_ip": "",
+    "user_mac": "",
+    "URL": "",
+    "username": "${username}",
+    "password": "${password}",
+    "save_me": "0"
+  },
+  "default": "5"
+}

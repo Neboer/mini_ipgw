@@ -2,6 +2,7 @@
   <dictionary name="neboer">
     <words>
       <w>ipgw</w>
+      <w>libcurl</w>
     </words>
   </dictionary>
 </component>
