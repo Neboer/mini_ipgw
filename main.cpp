@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {// programme entrance
     char option;// getopt() currently handle option
-    const char help_file_location[] = "/home/neboer/documents/ipgw-linux-c/module/helpfile.txt";
+    const char help_file_location[] = "/home/neboer/documents/ipgw-linux-c/src/helpfile.txt";
     string username = string(), password;
     bool username_is_set = false, password_is_set = false;
 
@@ -66,6 +66,5 @@ int main(int argc, char *argv[]) {// programme entrance
         cerr << "must input password";
         return -1;
     }
-    printf("%s", get_data("default"));
-    cout << string(Post("www.baidu.com", ""));
+//    cout << string(Post("www.baidu.com", ""));
 }

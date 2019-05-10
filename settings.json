@@ -1,6 +1,9 @@
 {
   "postdata": {
-    "action": "${action}",
+    "action": [
+      "login",
+      "logout"
+    ],
     "ac_id": "1",
     "user_ip": "",
     "nas_ip": "",
@@ -10,5 +13,8 @@
     "password": "${password}",
     "save_me": "0"
   },
-  "default": "5"
+  "headers": {},
+  "default": "5",
+  "log_url": "http://ipgw.neu.edu.cn",
+  "man_url": "http://ipgw.neu.edu.cn:8800/"
 }
