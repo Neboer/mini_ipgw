@@ -57,7 +57,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     return realsize;
 }
 
-char *Post(const char *url, const char *PostData) {
+char *Post(const char *url, const char *PostData, const char *useragent) {
     CURL *curl_handle;
     CURLcode res;
 
@@ -83,7 +83,7 @@ char *Post(const char *url, const char *PostData) {
     curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, PostData);
     /* some servers don't like requests that are made without a user-agent
        field, so we provide one */
-    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, useragent);
 
     /* get it! */
     res = curl_easy_perform(curl_handle);

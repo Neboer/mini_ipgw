@@ -18,6 +18,7 @@ char *get_settings(const char *input_loc) {
         fseek(setting, 0, SEEK_END);// Try to use ANSI C standard function to get the size of setting file.
         const int settingFileSize = ftell(setting);
         settingFileString = malloc(settingFileSize);
+        fseek(setting, 0, SEEK_SET);
         fread(settingFileString, settingFileSize + 1, 1, setting);
 //        strcpy(settingFileString, setting->_IO_read_base);
 //        fread(settingFileString, 100, settingFileSize + 1, setting);

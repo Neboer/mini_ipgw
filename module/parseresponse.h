@@ -1,0 +1,7 @@
+//
+#ifndef IPGW_PARSERESPONSE_H
+#define IPGW_PARSERESPONSE_H
+
+
+
+#endif //IPGW_PARSERESPONSE_H
