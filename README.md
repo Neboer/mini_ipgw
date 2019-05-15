@@ -82,4 +82,3 @@ You can set the default username(student number) and your password in it.
 You can also set the default account of the NEU network center website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
  
  and so on ...
-  

@@ -33,31 +33,6 @@ cJSON *get_parsed_settings() {
     return cJSON_Parse(setting_string);//TODO: add error-shooting methods
 }
 
-char *getRawPostDataString(int activity) {
-    cJSON *post_data_json = cJSON_GetObjectItemCaseSensitive(get_parsed_settings(), "postdata");
-    cJSON *new_data_json = cJSON_CreateObject();
-    if (post_data_json == NULL) return NULL;
-    for (cJSON *walker = post_data_json->child; walker; walker = walker->next) {
-        if (cJSON_IsArray(walker)) {
-            cJSON *item = cJSON_GetArrayItem(walker, activity);
-            if (cJSON_IsString(item)) {
-                cJSON_AddStringToObject(new_data_json, walker->string, item->valuestring);
-            } else {
-                fprintf(stderr, "POST: error praising %s", walker->string);
-                return NULL;
-            }
-        } else if (cJSON_IsString(walker)) {
-            cJSON_AddStringToObject(new_data_json, walker->string, walker->valuestring);
-        } else if (cJSON_IsNumber(walker)) {
-            cJSON_AddNumberToObject(new_data_json, walker->string, walker->valuedouble);
-        } else {
-            fprintf(stderr, "POST: cannot deal with object %s", walker->string);
-            return NULL;
-        }
-    }
-    return cJSON_PrintUnformatted(new_data_json);
-}
-
 void *getSettingsData(const char *options) {// Notice: if string will return char*, etc...
     cJSON *setting_json = get_parsed_settings();
     if (!setting_json) return NULL;
@@ -68,5 +43,20 @@ void *getSettingsData(const char *options) {// Notice: if string will return cha
     }
     if (cJSON_IsNumber(content_value))return &content_value->valueint;
     else if (cJSON_IsString(content_value))return content_value->valuestring;
-    else return cJSON_Print(content_value);
+    else return content_value;
+}
+
+char *getPostData(int options) {
+    cJSON *whole_post_data = (cJSON *) getSettingsData("postdata");
+    cJSON *log_string;
+    if (options == LOGIN) {
+        log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "login");
+    } else {
+        log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "logout");
+    }
+    if (!log_string || !cJSON_IsString(log_string)) {
+        fprintf(stderr, "error read login/out post data");
+        return NULL;
+    }
+    return log_string->valuestring;
 }

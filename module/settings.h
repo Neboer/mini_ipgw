@@ -7,7 +7,7 @@
 #define LOGIN 0
 #define LOGOUT 1
 
-char *getRawPostDataString(int activity);
+char *getPostData(int options);
 
 void *getSettingsData(const char *options);// Notice: if string will return char*, etc...
 

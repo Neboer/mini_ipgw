@@ -3,7 +3,7 @@ project(ipgw)
 set(CURL_LIBRARY "-lcurl")
 find_package(CURL REQUIRED)
 aux_source_directory(module ALL_MODULE) # add all file under module/ to main.
-add_executable(ipgw main.cpp ${ALL_MODULE})
+add_executable(ipgw main.c ${ALL_MODULE})
 MESSAGE(STATUS ${ALL_MODULE})
 INCLUDE_DIRECTORIES(${CURL_INCLUDE_DIR})
 TARGET_LINK_LIBRARIES(ipgw ${CURL_LIBRARIES})

@@ -7,16 +7,22 @@
 extern "C" {
 #include "module/settings.h"
 #include "module/getinmemory.h"
+#include "module/makerequest.h"
 }
 
 using namespace std;
 
+string username = string(), password;
+bool username_is_set = false, password_is_set = false, action = LOGIN;
+
+void replace_words(string &words){
+    words.replace(words.find("${username}"), 11, username);
+    words.replace(words.find("${password}"), 11, password);
+}
+
 int main(int argc, char *argv[]) {// programme entrance
     char option;// getopt() currently handle option
     const char help_file_location[] = "/home/neboer/documents/ipgw-linux-c/src/helpfile.txt";
-    string username = string(), password;
-    bool username_is_set = false, password_is_set = false, action = LOGIN;
-
     while ((option = getopt(argc, argv, "hu:p:o")) != -1) {
         switch (option) {
             case 'h':// show help page
@@ -70,9 +76,5 @@ int main(int argc, char *argv[]) {// programme entrance
         cerr << "must input password";
         return -1;
     }
-    string rawPostDataString = string(getRawPostDataString(action));
-    rawPostDataString.replace(rawPostDataString.find("${username}"), 11, username);
-    rawPostDataString.replace(rawPostDataString.find("${password}"), 11, password);
-
-    cout << rawPostDataString;
+    ipgw_action(action,username,password);
 }
