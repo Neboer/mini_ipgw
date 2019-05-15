@@ -7,6 +7,7 @@
 #include "module/settings.h"
 #include "module/getinmemory.h"
 #include "module/makerequest.h"
+#include "module/parseresponse.h"
 
 int main(int argc, char *argv[]) {
     char username[MAX_UNPW_LENGTH], password[MAX_UNPW_LENGTH];
@@ -34,14 +35,21 @@ int main(int argc, char *argv[]) {
                 break;
             }
             default: {
-                fprintf(stderr,"error input.");
+                fprintf(stderr, "error input.");
                 return -1;
             }
         }
     }
-    if(!username_is_set) {fprintf(stderr,"username not set");
-        return -1;}
-    if(!password_is_set) {fprintf(stderr,"username not set");
-        return -1;}
+    if (!username_is_set) {
+        fprintf(stderr, "username not set");
+        return -1;
+    }
+    if (!password_is_set) {
+        fprintf(stderr, "username not set");
+        return -1;
+    }
     requests get_data = ipgw_action(action, username, password);
+    char a[6] = {0};
+    find_result_code_string(get_data.content, a);
+    printf("%s", a);
 }
