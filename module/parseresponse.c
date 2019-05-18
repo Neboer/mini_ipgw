@@ -16,6 +16,7 @@ int parse_ipgw_Result(requests req) {
             sscanf(req.content, "%*3576c%s", errStr);
             if (strcmp(errStr, "E2531:") == 0) return IPGW_USER_NOT_FOUND;
             if (strcmp(errStr, "E2553:") == 0) return IPGW_PASSWORD_ERROR;
+            if (strcmp(errStr, "E2620:") == 0) return IPGW_ALREADY_ONLINE;
             if (strcmp(errStr, "op\">") == 0) return IPGW_NETWORK_CONNECTED;
             else {
                 fprintf(stderr, "parse ipgw response error!Error code:\n%s", errStr);

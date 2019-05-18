@@ -54,9 +54,15 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "username not set\n");
         return -1;
     }
-    if (!password_is_set) {
-        fprintf(stderr, "password not set\n");
-        return -1;
+    if (password_is_set) {
+        fprintf(stderr, "recommend you not use -p, input password in lint area.\n");
+    } else {
+        char *pass = getpass("password:");
+        if (!pass) {
+            fprintf(stderr, "password cannot be empty!");
+            return -1;
+        }
+        strcpy(password, pass);
     }
     requests get_data = ipgw_action(action, username, password);
     switch (parse_ipgw_Result(get_data)) {
@@ -74,6 +80,9 @@ int main(int argc, char *argv[]) {
         }
         case IPGW_NETWORK_DISCONNECTED: {
             return 0;
+        }
+        case IPGW_ALREADY_ONLINE: {
+            printf("correct, but user already online.\n");
         }
         default: {
             return 0;
