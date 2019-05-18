@@ -11,9 +11,9 @@ you can surely change the target website and the post data.
 students.
 ## build
 You can download the binary programme directly.
-The programme need [libcurl](https://curl.haxx.se/download.html) library to work properly.
+The programme needs [libcurl](https://curl.haxx.se/download.html) library to work properly.
 The programme also need [cjson](https://github.com/DaveGamble/cJSON/releases) library to parse json file.
-Once it is compiled, it will only need libcurl to work properly. The cjson library is static-linked and it don't need user to download.
+Once it is compiled, it will only need libcurl to work properly. The cjson library is static-linked and it doesn't need the user to download.
 
 
 You can use cmake to build the programme from source code. The programme contains a cmakelist file and you can build it
@@ -22,7 +22,7 @@ by these commands:
 cmake
 ```
 ## usage
-Ipgw managener can be used in many different ways. However, it is quite easy to use and configure.
+Ipgw manager can be used in many different ways. However, it is quite easy to use and configure.
 ### basic usage
 ```
 ipgw
@@ -39,7 +39,7 @@ use a school number as username to login ipgw.
 
 remember this: if you pass no username to the programme, the programme will login with default configure.
 
-If everything is ok, the programme will soon ask you for password.
+If everything is ok, the programme will soon ask you for the password.
 ```
 ipgw -u <username> -p|--password <password>
 ```
@@ -67,7 +67,7 @@ ipgw --configure <configure-option>=<value>
 ```
 change the configuration of the programme.
 
-You can easily change many options of the programme.The software prepare a lot of settable
+You can easily change many options of the programme. The software prepares a lot of settable
 options to you so that you can let it do many things as you want.
 ```
 ipgw --edit-configure
@@ -82,6 +82,6 @@ ipgw --save-configure
 by default, the configuration file is ~/ipgw/settings.json
 You can set the default username(student number) and your password in it.
 
-You can also set the default account of the NEU network center website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
+You can also set the default account of the NEU network centre website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
  
  and so on ...
