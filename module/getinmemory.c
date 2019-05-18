@@ -85,9 +85,6 @@ requests Post(const char *url, const char *PostData, const char *useragent) {
     /* some servers don't like requests that are made without a user-agent
        field, so we provide one */
     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, useragent);
-    /* this is the status code*/
-    curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE, &req.code);
-
     /* get it! */
     res = curl_easy_perform(curl_handle);
 
@@ -100,6 +97,8 @@ requests Post(const char *url, const char *PostData, const char *useragent) {
         return req;
     } else {
         // DATA IS HERE. PASS IT TO WHEREVER YOU WANT
+        /* this is the status code*/
+        curl_easy_getinfo(curl_handle, CURLINFO_RESPONSE_CODE, &(req.code));
         curl_easy_cleanup(curl_handle);
         curl_global_cleanup();
         req.content = chunk.memory;
