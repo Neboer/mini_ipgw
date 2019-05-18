@@ -11,9 +11,12 @@ you can surely change the target website and the post data.
 students.
 ## build
 You can download the binary programme directly.
-The programme need libcurl library to work properly.The programme have a complete-compiled version
-, when you use it, you don't have to install other library.
-You can also use cmake to build the programme from source code. The programme contains a makefile and you can build it
+The programme need [libcurl](https://curl.haxx.se/download.html) library to work properly.
+The programme also need [cjson](https://github.com/DaveGamble/cJSON/releases) library to parse json file.
+Once it is compiled, it will only need libcurl to work properly. The cjson library is static-linked and it don't need user to download.
+
+
+You can use cmake to build the programme from source code. The programme contains a cmakelist file and you can build it
 by these commands:
 ```
 cmake
