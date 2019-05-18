@@ -4,8 +4,7 @@
 
 
 #define DEFAULT_SETTINGS_LOCATION "/home/neboer/documents/ipgw-linux-c/settings.json"
-#define LOGIN 0
-#define LOGOUT 1
+
 
 char *getPostData(int options);
 

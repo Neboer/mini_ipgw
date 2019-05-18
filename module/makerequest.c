@@ -53,7 +53,7 @@ char *str_replace(char *orig, char *rep, char *with) { // aimed at replace strin
 requests ipgw_action(int action, char *username, char *password) {
     char* postdata = getPostData(action);
     requests req;
-    req.code = 0, req.content = NULL;
+    req.code = 0, req.content = NULL, req.size = 0;
     if(!postdata) return req;
     char* data_will_be_passed = str_replace(str_replace(postdata,"${username}",username)
             ,"${password}",password);
@@ -61,5 +61,6 @@ requests ipgw_action(int action, char *username, char *password) {
     char* ua = getSettingsData("useragent");
     if(!url || !ua) return req;
     req = Post(url, data_will_be_passed, ua);
+    req.type = action;
     return req;
 }

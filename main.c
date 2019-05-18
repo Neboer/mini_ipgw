@@ -12,9 +12,13 @@
 
 int main(int argc, char *argv[]) {
     char username[MAX_UNPW_LENGTH], password[MAX_UNPW_LENGTH];
-    short username_is_set = 0, password_is_set = 0, action = LOGIN;
+    short username_is_set = 0, password_is_set = 0, action = IPGW_REQUEST_LOGIN;
     char option;// store the current parsing option character
-    while ((option = getopt(argc, argv, "hu:p:o")) != -1) {
+    if (argc == 1) {
+        print_help_file();
+        return 0;
+    }
+    while ((option = getopt(argc, argv, "hu:p:ov")) != -1) {
         switch (option) {
             case 'h':// show help page
             {
@@ -33,46 +37,46 @@ int main(int argc, char *argv[]) {
                 break;
             }
             case 'o': {
-                action = LOGOUT;
+                action = IPGW_REQUEST_LOGOUT;
                 break;
             }
+            case 'v': {
+                printf("v1.0\n");
+                return 0;
+            }
             default: {
-                fprintf(stderr, "error input.");
+                fprintf(stderr, "error input.\n");
                 return -1;
             }
         }
     }
     if (!username_is_set) {
-        fprintf(stderr, "username not set");
+        fprintf(stderr, "username not set\n");
         return -1;
     }
     if (!password_is_set) {
-        fprintf(stderr, "password not set");
+        fprintf(stderr, "password not set\n");
         return -1;
     }
     requests get_data = ipgw_action(action, username, password);
     switch (parse_ipgw_Result(get_data)) {
         case IPGW_USER_NOT_FOUND: {
-            fprintf(stderr, "no user %s", username);
+            fprintf(stderr, "no user %s\n", username);
             return -1;
         }
         case IPGW_PASSWORD_ERROR: {
-            fprintf(stderr, "password error");
+            fprintf(stderr, "password error\n");
             return -2;
         }
-        case IPGW_NETWORK_CONNECTED:
-            printf("connected to network");
+        case IPGW_NETWORK_CONNECTED: {
+            printf("connected to network\n");
             return 0;
+        }
+        case IPGW_NETWORK_DISCONNECTED: {
+            return 0;
+        }
+        default: {
+            return 0;
+        }
     }
-//    char file[5000];
-//    FILE* fileee = fopen("/home/neboer/documents/ipgw-linux-c/response.html","r");
-//    fread(file,5000,1,fileee);
-//    char at[10];
-//    sscanf(get_data.content,"%*3576c%s",at);
-//    printf("%s",at);
-
-//    char* what = strstr(file,"<p>E");
-//    printf("%ld",what-file);
-//    printf("%.50s",what);
-//    printf("%d",get_data.code);
 }

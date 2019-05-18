@@ -1,5 +1,6 @@
 //The file aimed at make and parse settings.json file
 #include "settings.h"
+#include "makerequest.h"
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
@@ -49,7 +50,7 @@ void *getSettingsData(const char *options) {// Notice: if string will return cha
 char *getPostData(int options) {
     cJSON *whole_post_data = (cJSON *) getSettingsData("postdata");
     cJSON *log_string;
-    if (options == LOGIN) {
+    if (options == IPGW_REQUEST_LOGIN) {
         log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "login");
     } else {
         log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "logout");

@@ -1,1 +1,8 @@
-this is the help file.
+NEU ipgw login/logout programme v1.0.
+Written by Neboer, licenced under GNU GPL licence.
+usage:
+-u<username> set username
+-p<password> set password
+-o logout mod
+-v show version
+-h show this help file

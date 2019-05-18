@@ -102,7 +102,7 @@ requests Post(const char *url, const char *PostData, const char *useragent) {
         curl_easy_cleanup(curl_handle);
         curl_global_cleanup();
         req.content = chunk.memory;
+        req.size = chunk.size;
         return req;
     }
-    free(chunk.memory);
 }
