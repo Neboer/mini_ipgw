@@ -1,5 +1,5 @@
 NEU ipgw login/logout programme v1.0.
-Written by Neboer, licenced under GNU GPL licence.
+Written by Neboer, licenced under MIT licence.
 usage:
 -u<username> set username
 -p<password> set password
