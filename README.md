@@ -43,7 +43,7 @@ If everything is ok, the programme will soon ask you for the password.
 ```
 ipgw -u <username> -p|--password <password>
 ```
-pass password to ipgw either.**Unrecognized!**
+pass password to ipgw either.**Unrecommend!**
 ```
 ipgw -s|--status
 ```
