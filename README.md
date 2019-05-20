@@ -13,7 +13,7 @@ students.
 You can download the binary programme directly.
 The programme needs [libcurl](https://curl.haxx.se/download.html) library to work properly.
 The programme also need [cjson](https://github.com/DaveGamble/cJSON/releases) library to parse json file.
-Once it is compiled, it will only need libcurl to work properly. The cjson library is static-linked and it doesn't need the user to download.
+Once it is compiled, it will only need libcurl being installed. The cjson library is static-linked and it doesn't need the user to download.
 
 
 You can use cmake to build the programme from source code. The programme contains a cmakelist file and you can build it
