@@ -12,8 +12,15 @@ students.
 ## build
 You can download the binary programme directly.
 The programme needs [libcurl](https://curl.haxx.se/download.html) library to work properly.
+If you use Linux release version such as Ubuntu, you can simply install it via package
+ [libcurl4-openssl-dev](https://packages.ubuntu.com/xenial/libcurl4-openssl-dev).
+
+
 The programme also need [cjson](https://github.com/DaveGamble/cJSON/releases) library to parse json file.
 Once it is compiled, it will only need libcurl being installed. The cjson library is static-linked and it doesn't need the user to download.
+If you use Linux release version such as Ubuntu, you can simply install it via package
+ [libcjson-dev](https://packages.ubuntu.com/disco/libcjson-dev).
+ Notice: the ubuntu libcjson-dev package is a bit older than that on github.
 
 
 You can use cmake to build the programme from source code. The programme contains a cmakelist file and you can build it
@@ -21,6 +28,7 @@ by these commands:
 ```
 cmake
 ```
+The package is tested on 64bit Ubuntu 19.04. If you have problems during the build period, please commit a [issue](https://github.com/Neboer/ipgw_linux_c/issues/new) .
 ## usage
 Ipgw manager can be used in many different ways. However, it is quite easy to use and configure.
 ### basic usage

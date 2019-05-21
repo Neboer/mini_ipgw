@@ -21,15 +21,13 @@ char *get_settings(const char *input_loc) {
         settingFileString = malloc(settingFileSize);
         fseek(setting, 0, SEEK_SET);
         fread(settingFileString, settingFileSize + 1, 1, setting);
-//        strcpy(settingFileString, setting->_IO_read_base);
-//        fread(settingFileString, 100, settingFileSize + 1, setting);
         fclose(setting);
         return settingFileString;
     }
 }
 
 cJSON *get_parsed_settings() {
-    char *setting_string = get_settings(DEFAULT_SETTINGS_LOCATION);
+    char *setting_string = get_settings(strcat(getenv("HOME"), "/.ipgw/settings.json"));
     if (!setting_string) return NULL;
     return cJSON_Parse(setting_string);//TODO: add error-shooting methods
 }
@@ -56,7 +54,7 @@ char *getPostData(int options) {
         log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "logout");
     }
     if (!log_string || !cJSON_IsString(log_string)) {
-        fprintf(stderr, "error read login/out post data");
+        fprintf(stderr, "error read post data\n");
         return NULL;
     }
     return log_string->valuestring;

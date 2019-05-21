@@ -5,16 +5,22 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif (NOT CMAKE_BUILD_TYPE)
 if (UNIX)
-    MESSAGE(STATUS "linux build start")
+    set(READABLE_PERMISSION
+            OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+    MESSAGE(STATUS ${CMAKE_INSTALL_PREFIX})
     find_package(CURL REQUIRED)
     aux_source_directory(module ALL_MODULE) # add all file under module/ to main.
     add_executable(ipgw main.c ${ALL_MODULE})
     INCLUDE_DIRECTORIES(${CURL_INCLUDE_DIR})
     TARGET_LINK_LIBRARIES(ipgw curl)
-    TARGET_LINK_LIBRARIES(ipgw libcjson.a)
+    TARGET_LINK_LIBRARIES(ipgw cjson)
     set(CMAKE_CXX_STANDARD 14)
-    INSTALL(DIRECTORY src/ DESTINATION $ENV{HOME}/.ipgw
-            PATTERN * PERMISSIONS OWNER_WRITE WORLD_READ)
+    IF (CMAKE_BUILD_TYPE STREQUAL Release)
+        INSTALL(DIRECTORY src/ DESTINATION $ENV{HOME}/.ipgw
+                DIRECTORY_PERMISSIONS ${READABLE_PERMISSION}
+                PATTERN * PERMISSIONS ${READABLE_PERMISSION})
+        INSTALL(PROGRAMS $ENV{PWD}/ipgw DESTINATION ${CMAKE_INSTALL_PREFIX}/bin PERMISSIONS ${READABLE_PERMISSION})
+    endif ()
 elseif (WIN32)
     MESSAGE(STATUS "Windows does support this program, please wait for me to complete the cmakelist file.")
 endif ()

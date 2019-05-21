@@ -1,9 +1,10 @@
 #include "openhelpfile.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void print_help_file(void) {
-    const char help_file_location[] = "/home/neboer/documents/ipgw-linux-c/src/helpfile.txt";
+    const char *help_file_location = strcat(getenv("HOME"), "/.ipgw/helpfile.txt");
     FILE *helpFile = fopen(help_file_location, "r");
     if (!helpFile) {
         fprintf(stderr, "Help source file does not exist!\n");
