@@ -13,7 +13,7 @@ void print_help_file(void) {
         return;
     }
     strcpy(help_path, getenv("HOME"));
-    strcat(help_path, "/.ipgw/settings.json");
+    strcat(help_path, "/.ipgw/helpfile.txt");
     FILE *helpFile = fopen(help_path, "r");
     if (!helpFile) {
         fprintf(stderr, "Help source file does not exist!\n");
