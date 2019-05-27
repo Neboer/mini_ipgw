@@ -27,11 +27,19 @@ int main(int argc, char *argv[]) {
             }
             case 'u':// set username
             {
+                if (strlen(optarg) > MAX_UNPW_LENGTH - 1) {
+                    printf("too long input");
+                    return -1;
+                }
                 strcpy(username, optarg);
                 username_is_set = 1;
                 break;
             }
             case 'p': {
+                if (strlen(optarg) > MAX_UNPW_LENGTH - 1) {
+                    printf("too long input");
+                    return -1;
+                }
                 strcpy(password, optarg);
                 password_is_set = 1;
                 break;

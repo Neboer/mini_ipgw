@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <cjson/cJSON.h>
 
+#define MAX_HOME_LENGTH 100
+
 
 char *get_settings(const char *input_loc) {
     errno = 0;
@@ -27,7 +29,14 @@ char *get_settings(const char *input_loc) {
 }
 
 cJSON *get_parsed_settings() {
-    char *setting_string = get_settings(strcat(getenv("HOME"), "/.ipgw/settings.json"));
+    char setting_path[MAX_HOME_LENGTH];
+    if (strlen(getenv("HOME")) > MAX_HOME_LENGTH - strlen("/.ipgw/settings.json")) {
+        fprintf(stderr, "Too long HOME path.\n");
+        return NULL;
+    }
+    strcpy(setting_path, getenv("HOME"));
+    strcat(setting_path, "/.ipgw/settings.json");
+    char *setting_string = get_settings(setting_path);//TODO: getenv() only return same address, which caused over copy.
     if (!setting_string) return NULL;
     return cJSON_Parse(setting_string);//TODO: add error-shooting methods
 }

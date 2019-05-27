@@ -3,9 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_HOME_LENGTH 100
+
+
 void print_help_file(void) {
-    const char *help_file_location = strcat(getenv("HOME"), "/.ipgw/helpfile.txt");
-    FILE *helpFile = fopen(help_file_location, "r");
+    char help_path[MAX_HOME_LENGTH];
+    if (strlen(getenv("HOME")) > MAX_HOME_LENGTH - strlen("/.ipgw/helpfile.txt")) {
+        fprintf(stderr, "Too long HOME path.\n");
+        return;
+    }
+    strcpy(help_path, getenv("HOME"));
+    strcat(help_path, "/.ipgw/settings.json");
+    FILE *helpFile = fopen(help_path, "r");
     if (!helpFile) {
         fprintf(stderr, "Help source file does not exist!\n");
         return;
