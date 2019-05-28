@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
                 return 0;
             }
             default: {
-                fprintf(stderr, "error input.\n");
+                fprintf(stderr, "error input %d\n",option);
                 return -1;
             }
         }
