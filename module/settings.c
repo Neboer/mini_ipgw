@@ -36,7 +36,7 @@ cJSON *get_parsed_settings() {
     }
     strcpy(setting_path, getenv("HOME"));
     strcat(setting_path, "/.ipgw/settings.json");
-    char *setting_string = get_settings(setting_path);//TODO: getenv() only return same address, which caused over copy.
+    char *setting_string = get_settings(setting_path);
     if (!setting_string) return NULL;
     return cJSON_Parse(setting_string);//TODO: add error-shooting methods
 }

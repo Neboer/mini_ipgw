@@ -18,7 +18,9 @@ int main(int argc, char *argv[]) {
         print_help_file();
         return 0;
     }
-    while ((option = getopt(argc, argv, "hu:p:ov")) != -1) {
+    while (1) {
+        option = getopt(argc, argv, "hu:p:ov");
+        if (option == -1) break;
         switch (option) {
             case 'h':// show help page
             {
