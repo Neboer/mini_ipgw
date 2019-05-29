@@ -46,7 +46,7 @@ void *getSettingsData(const char *options) {// Notice: if string will return cha
     if (!setting_json) return NULL;
     cJSON *content_value = cJSON_GetObjectItemCaseSensitive(setting_json, options);
     if (!content_value) {
-        fprintf(stderr, "error get data %s", options);
+        fprintf(stderr, "error get data %s\n", options);
         return NULL;
     }
     if (cJSON_IsNumber(content_value))return &content_value->valueint;

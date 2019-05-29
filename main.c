@@ -12,15 +12,13 @@
 
 int main(int argc, char *argv[]) {
     char username[MAX_UNPW_LENGTH], password[MAX_UNPW_LENGTH];
-    short username_is_set = 0, password_is_set = 0, action = IPGW_REQUEST_LOGIN;
-    char option;// store the current parsing option character
+    short username_is_set = 0, password_is_set = 0, action = IPGW_REQUEST_LOGIN, test = 0;
+    int option;// store the current parsing option character
     if (argc == 1) {
         print_help_file();
         return 0;
     }
-    while (1) {
-        option = getopt(argc, argv, "hu:p:ov");
-        if (option == -1) break;
+    while ((option = getopt(argc, argv, "hu:p:ovt")) != -1 && option != 255) {
         switch (option) {
             case 'h':// show help page
             {
@@ -54,8 +52,12 @@ int main(int argc, char *argv[]) {
                 printf("v1.0\n");
                 return 0;
             }
+            case 't': {
+                test = 1;// test mode enable
+                break;
+            }
             default: {
-                fprintf(stderr, "error input %d\n",option);
+                fprintf(stderr, "error input %c\n", option);
                 return -1;
             }
         }
@@ -75,6 +77,11 @@ int main(int argc, char *argv[]) {
         strcpy(password, pass);
     }
     requests get_data = ipgw_action(action, username, password);
+    if (test) {
+//        printf("%s", get_data.content);
+        printf("%ld", strstr(get_data.content, "<p>E") - get_data.content);
+        return 0;
+    }
     switch (parse_ipgw_Result(get_data)) {
         case IPGW_USER_NOT_FOUND: {
             fprintf(stderr, "no user %s\n", username);

@@ -6,3 +6,4 @@ usage:
 -o logout mod
 -v show version
 -h show this help file
+-t test mode, print whole response content
