@@ -51,15 +51,19 @@ char *str_replace(char *orig, char *rep, char *with) { // aimed at replace strin
 }
 
 requests ipgw_action(int action, char *username, char *password) {
-    char* postdata = getPostData(action);
+    char *postdata;
+    if (action == IPGW_REQUEST_LOGIN) {
+        postdata = getSettingsObject(2, "postdata", "login");
+    } else {
+        postdata = getSettingsObject(2, "postdata", "logout");
+    }
     requests req;
     req.code = 0, req.content = NULL, req.size = 0;
-    if(!postdata) return req;
-    char* data_will_be_passed = str_replace(str_replace(postdata,"${username}",username)
-            ,"${password}",password);
-    char* url = getSettingsData("log_url");
-    char* ua = getSettingsData("useragent");
-    if(!url || !ua) return req;
+    if (!postdata) return req;
+    char *data_will_be_passed = str_replace(str_replace(postdata, "${username}", username), "${password}", password);
+    char *url = getSettingsObject(1, "log_url");
+    char *ua = getSettingsObject(1, "useragent");
+    if (!url || !ua) return req;
     req = Post(url, data_will_be_passed, ua);
     req.type = action;
     return req;

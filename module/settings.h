@@ -2,8 +2,7 @@
 #ifndef IPGW_SETTINGS_H
 #define IPGW_SETTINGS_H
 
-char *getPostData(int options);
+#include <cjson/cJSON.h>
 
-void *getSettingsData(const char *options);// Notice: if string will return char*, etc...
-
+void *getSettingsObject(int argc, ...);// powerful function. Get data and return the deep data in object.
 #endif //IPGW_SETTINGS_H

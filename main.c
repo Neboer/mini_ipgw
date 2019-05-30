@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
     }
     requests get_data = ipgw_action(action, username, password);
     if (test) {
-//        printf("%s", get_data.content);
-        printf("%ld", strstr(get_data.content, "<p>E") - get_data.content);
+        printf("%s", get_data.content);
+//        printf("%ld", strstr(get_data.content, "<p>E") - get_data.content);
         return 0;
     }
     switch (parse_ipgw_Result(get_data)) {

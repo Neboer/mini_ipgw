@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <cjson/cJSON.h>
 #include <stdarg.h>
 
 #define MAX_HOME_LENGTH 100
@@ -38,20 +37,25 @@ cJSON *get_parsed_settings() {
     strcat(setting_path, "/.ipgw/settings.json");
     char *setting_string = get_settings(setting_path);
     if (!setting_string) return NULL;
-    return cJSON_Parse(setting_string);//TODO: add error-shooting methods
+    cJSON *parsed_settings = cJSON_Parse(setting_string);
+    if (!parsed_settings) {
+        fprintf(stderr, "Parse settings file ERROR!");
+        return NULL;
+    }
+    return parsed_settings;//TODO: add error-shooting methods
 }
 
-void *get_settings_item(cJSON *json, int argc, ...)// powerful function. Get data and return the deep data in object.
+void *getSettingsObject(int argc, ...)// powerful function. Get data and return the deep data in object.
 {
     va_list arglist;
     va_start(arglist, argc);
-    char *a;
-    cJSON *walker = json;
+    char *current_arg;
+    cJSON *walker = get_parsed_settings();
     for (int i = 0; i < argc; i++) {
-        a = va_arg(arglist, char *);
-        walker = cJSON_GetObjectItemCaseSensitive(walker, a);
+        current_arg = va_arg(arglist, char *);
+        walker = cJSON_GetObjectItemCaseSensitive(walker, current_arg);
         if (!walker) {
-            fprintf(stderr, "error get %s\n", a);
+            fprintf(stderr, "error get %s\n", current_arg);
             return NULL;
         }
     }
@@ -64,32 +68,4 @@ void *get_settings_item(cJSON *json, int argc, ...)// powerful function. Get dat
         return walker;
     }
     return NULL;
-}
-
-void *getSettingsData(const char *options) {// Notice: if string will return char*, etc...
-    cJSON *setting_json = get_parsed_settings();
-    if (!setting_json) return NULL;
-    cJSON *content_value = cJSON_GetObjectItemCaseSensitive(setting_json, options);
-    if (!content_value) {
-        fprintf(stderr, "error get data %s\n", options);
-        return NULL;
-    }
-    if (cJSON_IsNumber(content_value))return &content_value->valueint;
-    else if (cJSON_IsString(content_value))return content_value->valuestring;
-    else return content_value;
-}
-
-char *getPostData(int options) {
-    cJSON *whole_post_data = (cJSON *) getSettingsData("postdata");
-    cJSON *log_string;
-    if (options == IPGW_REQUEST_LOGIN) {
-        log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "login");
-    } else {
-        log_string = cJSON_GetObjectItemCaseSensitive(whole_post_data, "logout");
-    }
-    if (!log_string || !cJSON_IsString(log_string)) {
-        fprintf(stderr, "error read post data\n");
-        return NULL;
-    }
-    return log_string->valuestring;
 }
