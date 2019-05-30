@@ -1,4 +1,8 @@
 # NEU ipgw manager
+
+
+![](https://img.shields.io/badge/NEU-ipgw--manager-blue.svg)
+
 help you manage your ipgw network connection.
 
 The neu-ipgw-manager is a light programme which can help you connect to / disconnect from the ipgw network in NEU.
