@@ -6,9 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <cjson/cJSON.h>
+#include <stdarg.h>
 
 #define MAX_HOME_LENGTH 100
-
 
 char *get_settings(const char *input_loc) {
     errno = 0;
@@ -39,6 +39,31 @@ cJSON *get_parsed_settings() {
     char *setting_string = get_settings(setting_path);
     if (!setting_string) return NULL;
     return cJSON_Parse(setting_string);//TODO: add error-shooting methods
+}
+
+void *get_settings_item(cJSON *json, int argc, ...)// powerful function. Get data and return the deep data in object.
+{
+    va_list arglist;
+    va_start(arglist, argc);
+    char *a;
+    cJSON *walker = json;
+    for (int i = 0; i < argc; i++) {
+        a = va_arg(arglist, char *);
+        walker = cJSON_GetObjectItemCaseSensitive(walker, a);
+        if (!walker) {
+            fprintf(stderr, "error get %s\n", a);
+            return NULL;
+        }
+    }
+    va_end(arglist);
+    if (cJSON_IsString(walker)) {
+        return (char *) walker->valuestring;
+    } else if (cJSON_IsNumber(walker)) {
+        return &(walker->valueint);
+    } else if (cJSON_IsObject(walker)) {
+        return walker;
+    }
+    return NULL;
 }
 
 void *getSettingsData(const char *options) {// Notice: if string will return char*, etc...

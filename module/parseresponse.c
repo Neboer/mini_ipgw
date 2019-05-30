@@ -13,7 +13,7 @@ struct compare_instant {
     char *pattern, *user_not_found, *password_error, *already_online;
 };
 
-struct compare_instant makeCompareInstant() {
+struct compare_instant makeCompareInstant() {// TODO: wait for get multi setting.
 
 }
 
