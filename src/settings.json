@@ -7,6 +7,24 @@
   "default": "5",
   "log_url": "http://ipgw.neu.edu.cn/srun_portal_pc.php?ac_id=1&",
   "man_url": "http://ipgw.neu.edu.cn:8800/",
+  "parse_setting": {
+    "user not found": [
+      10,
+      "E2531:"
+    ],
+    "password error": [
+      10,
+      "E2553:"
+    ],
+    "already online": [
+      10,
+      "E2620:"
+    ],
+    "connected": [
+      10,
+      "op\">"
+    ]
+  },
   "match_pattern": "%*3764c%s",
   "compare_string": {
     "user not found": "E2531:",

@@ -12,6 +12,6 @@
 #define IPGW_NETWORK_DISCONNECTED 1
 #define IPGW_NETWORK_DISCONNECTED_ERROR 2
 
-int parse_ipgw_Result(requests req);
+int parseIpgwResult(requests req);
 
 #endif //IPGW_PARSERESPONSE_H

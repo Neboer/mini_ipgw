@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
 //        printf("%ld", strstr(get_data.content, "<p>E") - get_data.content);
         return 0;
     }
-    switch (parse_ipgw_Result(get_data)) {
+    switch (parseIpgwResult(get_data)) {
         case IPGW_USER_NOT_FOUND: {
             fprintf(stderr, "no user %s\n", username);
             return -1;

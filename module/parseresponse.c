@@ -3,6 +3,9 @@
 // 您似乎未曾连接到网络...
 // 注销失败：Password is error.
 // 网络已断开
+/* 通过sscanf比较指定位置是否有特定的字符串来判断响应类型。如果指定位置字符串与所有模式均不匹配，则说明返回值错误。
+ * 返回值错误的情况下，将启动自动纠错，尝试在返回全文中搜索每一种可能参与比较的字符串，
+ * 如果搜索成功，则返回结果，并且重写settings.json文件中关于搜索位置的选项。*/
 #include "parseresponse.h"
 #include "makerequest.h"
 #include "settings.h"
@@ -13,7 +16,7 @@ struct compare_instant {
     char *pattern, *user_not_found, *password_error, *already_online, *connected;
 };
 
-struct compare_instant makeCompareInstant() {// TODO: wait for get multi setting.
+struct compare_instant makeCompareInstant() {
     struct compare_instant instant;
     instant.pattern = getSettingsObject(1, "match_pattern");
     instant.user_not_found = getSettingsObject(2, "compare_string", "user not found");
@@ -23,7 +26,7 @@ struct compare_instant makeCompareInstant() {// TODO: wait for get multi setting
     return instant;
 }
 
-int parse_ipgw_Result(requests req) {
+int parseIpgwResult(requests req) {
     if (req.type == IPGW_REQUEST_LOGIN) {
         if (req.code == 503) return IPGW_SERVICE_UNAVAILABLE;
         else if (req.code == 200) {
@@ -40,7 +43,7 @@ int parse_ipgw_Result(requests req) {
                 return -1;
             }
         } else {
-            fprintf(stderr, "error get code %d", req.code);
+            fprintf(stderr, "error get code %d\n", req.code);
             return -2;
         }
     } else if (req.type == IPGW_REQUEST_LOGOUT) {
