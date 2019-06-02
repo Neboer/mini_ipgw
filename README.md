@@ -5,7 +5,7 @@
 
 help you manage your ipgw network connection.
 
-# **NOTE!! ipgw 网络不再支持用户名密码登录，使用sso的解决方案正在加紧开发中，未来一定会支持。本软件暂时不再可用，请大家切勿着急！**
+# **NOTE!! ipgw 网络不再支持用户名密码登录，使用sso的解决方案正在加紧开发中，未来一定会支持。本软件暂时不再可用，敬请期待！**
 The neu-ipgw-manager is a light programme which can help you connect to / disconnect from the ipgw network in NEU.
 It can check your network status and save your time on ipgw login/logout.
 
