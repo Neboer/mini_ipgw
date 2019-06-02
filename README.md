@@ -5,6 +5,7 @@
 
 help you manage your ipgw network connection.
 
+# **NOTE!! ipgw 网络不再支持用户名密码登录，使用sso的解决方案正在加紧开发中，未来一定会支持。本软件暂时不再可用，请大家切勿着急！**
 The neu-ipgw-manager is a light programme which can help you connect to / disconnect from the ipgw network in NEU.
 It can check your network status and save your time on ipgw login/logout.
 
@@ -91,7 +92,7 @@ Don't forget to run the following command to let it work.
 ipgw --save-configure
 ```
 ### configuration file
-by default, the configuration file is ~/ipgw/settings.json
+by default, the configuration file is ~/.ipgw/settings.json
 You can set the default username(student number) and your password in it.
 
 You can also set the default account of the NEU network centre website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
