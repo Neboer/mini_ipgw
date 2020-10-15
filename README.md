@@ -1,100 +1,36 @@
-# NEU ipgw manager
+# mini_ipgw
 
+本程序是用纯c编写的东北大学ipgw网关管理程序，它最大的优势就是快速、便捷且灵活。虽然现在它的配置等过程还存在一些繁琐之处，但是未来的它一定会越做越好。
 
-![](https://img.shields.io/badge/NEU-ipgw--manager-blue.svg)
+## 设计理念
 
-help you manage your ipgw network connection.
+今天，ipgw的首页已经重新支持用户通过传统接口登录，这也就意味着这个程序可以重新工作了。程序设计的目的就是——在服务器或者因为一些原因无法正常启动显示的主机上，登录网关是一个非常麻烦的事情。使用c语言开发的程序仅需一个依赖libcurl就可以正常运行，相比于python程序，运行的时候不需要复杂的环境，且运行速度更快；相比于golang，执行效率更高并且不需要带http(s)网络模块；使用cmake开发一样支持跨平台编译，极大的发挥了c语言的优势。
 
-# **NOTE!! ipgw 网络不再支持用户名密码登录，为了适配新的API，该C版本将转移至python写的新版本[ipgw-py-manager](https://github.com/Neboer/ipgw-py-manager)，这并不意味着这个版本将不再开发了，相反，欢迎大家为提高程序的性能开发这个程序的C版本。目前python程序将持续维护，该仓库暂停开发。**
-The neu-ipgw-manager is a light programme which can help you connect to / disconnect from the ipgw network in NEU.
-It can check your network status and save your time on ipgw login/logout.
+## 安装方法
 
-By the way, the program is developed based on ipgw.neu.edu.cn. If you want to do other things with this program,
-you can surely change the target website and the post data.
+目前的安装主要分成以下几步。
 
-**Welcome to join me to develop this software!** The software is designed and developed by NEU students and will help more NEU
-students.
-## build
-You can download the binary programme directly.
-The programme needs [libcurl](https://curl.haxx.se/download.html) library to work properly.
-If you use Linux release version such as Ubuntu, you can simply install it via package
- [libcurl4-openssl-dev](https://packages.ubuntu.com/xenial/libcurl4-openssl-dev).
+1. 克隆整个仓库或者下载zip包到本地。
+2. 在当前用户的home目录下创建文件夹.ipgw，即为`mkdir ~/.ipgw`
+3. 进入src下，复制两个文件到`~/.ipgw`下。
+4. 构建并编译。首先需要在项目目录下执行`cmake .`，然后执行`make`即可。
+5. 编译成功之后，目录下将会出现ipgw可执行文件，即可通过复制/链接/加入PATH等操作完成安装，让`ipgw`成为一个命令。
 
+## 运行指南
 
-The programme also need [cjson](https://github.com/DaveGamble/cJSON/releases) library to parse json file.
-Once it is compiled, it will only need libcurl being installed. The cjson library is static-linked and it doesn't need the user to download.
-If you use Linux release version such as Ubuntu, you can simply install it via package
- [libcjson-dev](https://packages.ubuntu.com/disco/libcjson-dev).
- Notice: the ubuntu libcjson-dev package is a bit older than that on github.
+参考`ipgw -h`。
 
+- `ipgw -u20109876`将会打开密码输入提示，输入密码并回车即可完成连接。
+- `ipgw -u20109876 -p0123xxxdfs`将会直接用密码连接。
 
-You can use cmake to build the programme from source code. The programme contains a cmakelist file and you can build it
-by these commands:
-```
-cmake
-```
-The package is tested on 64bit Ubuntu 19.04. If you have problems during the build period, please commit a [issue](https://github.com/Neboer/ipgw_linux_c/issues/new) .
-## usage
-Ipgw manager can be used in many different ways. However, it is quite easy to use and configure.
-### basic usage
-```
-ipgw
-```
-if you pass no parameters to the programme, the programme will login with the default configure.
-```
-ipgw -h|--help
-```
-show help page
-```
-ipgw -u|--user <username>
-```
-use a school number as username to login ipgw.
+## 高级支持选项
 
-remember this: if you pass no username to the programme, the programme will login with default configure.
+本程序运行的一个原理就是通过直接截取ipgw登录后返回的HTML页面的部分信息并与设定值相比对，从而判断登录的结果。如果结果截取的位置错误，将会无法辩识结果。这种情况比较罕见，经常在学校更新ipgw接口的返回信息的时候出现。
 
-If everything is ok, the programme will soon ask you for the password.
-```
-ipgw -u <username> -p|--password <password>
-```
-pass password to ipgw either.**Unrecommend!**
-```
-ipgw -s|--status
-```
-show status of the NEU ipgw network connection.
+为了应对可能不稳定的ipgw页面，程序在设计的时候就做到了“运行时灵活”。通过一个非常详细的配置文件，你可以几乎完全控制程序核心解析的全过程。这个配置文件并不提供解释，如果你发现程序无法运行，返回错误，不妨在登录的命令里加入-t选项，看看学校是否变更了页面的返回值。如果确实如此，除了开issue报告问题，你还可以编辑配置文件来尝试修复它的解析过——如果修复成功，请直接开Pull Request，将你的配置文件提交上来。
 
-For example, if you are connected to the internet through NEU ipgw with wire
-, the programme will return "Ethernet NEU Internet". 
-```
-ipgw -o|--offline
-```
-offline yourself from ipgw.
+## 开发计划
 
-### easy configure
-```
-ipgw -c|--configure <configure-option>(optional)
-```
-show the configuration of the programme.
+程序目前可以正常工作，没有任何问题。为了照顾一般linux用户，未来的Release里可能会加安装脚本等，同时配置文件里还可以设置如何解析请求内容等（现在的程序并不支持此功能，接下来将会开发这个）。
 
-```
-ipgw --configure <configure-option>=<value>
-```
-change the configuration of the programme.
-
-You can easily change many options of the programme. The software prepares a lot of settable
-options to you so that you can let it do many things as you want.
-```
-ipgw --edit-configure
-```
-open the configure file with your default text editor.
-
-Don't forget to run the following command to let it work.
-```
-ipgw --save-configure
-```
-### configuration file
-by default, the configuration file is ~/.ipgw/settings.json
-You can set the default username(student number) and your password in it.
-
-You can also set the default account of the NEU network centre website [ipgw.neu.edu.cn:8800](http://ipgw.neu.edu.cn:8800/)
- 
- and so on ...
+如果你对此项目非常感兴趣，也想和我一起开发，你可以随时给我发邮件取得联系。
